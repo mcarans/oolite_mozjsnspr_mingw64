@@ -1,0 +1,2368 @@
+
+BEGIN TEST: abstract
+
+PASS
+
+END TEST: abstract
+
+
+BEGIN TEST: accept
+
+PASS
+
+END TEST: accept
+
+
+BEGIN TEST: acceptread
+
+Testing w/ write_dally = 0 msec
+Accepted connection from (0xcafdb8)127.0.0.1:38397
+(Server) read [0xcafd40..0xcafdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 500 msec
+Accepted connection from (0x12afdb8)127.0.0.1:38653
+(Server) read [0x12afd40..0x12afdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1000 msec
+Accepted connection from (0xeafdb8)127.0.0.1:38909
+(Server) read [0xeafd40..0xeafdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1500 msec
+Accepted connection from (0xcafdb8)127.0.0.1:39165
+(Server) read [0xcafd40..0xcafdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 2000 msec
+PR_AcceptRead (server) failed: PR_Recv (client) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+Testing w/ write_dally = 2500 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+
+END TEST: acceptread
+
+
+BEGIN TEST: acceptreademu
+
+Testing w/ write_dally = 0 msec
+Accepted connection from (0xebfdb8)127.0.0.1:39933
+(Server) read [0xebfd40..0xebfdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 500 msec
+Accepted connection from (0x14bfdb8)127.0.0.1:40189
+(Server) read [0x14bfd40..0x14bfdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1000 msec
+Accepted connection from (0xebfdb8)127.0.0.1:40445
+(Server) read [0xebfd40..0xebfdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1500 msec
+Accepted connection from (0x14bfdb8)127.0.0.1:40701
+(Server) read [0x14bfd40..0x14bfdb5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 2000 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+Testing w/ write_dally = 2500 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+
+END TEST: acceptreademu
+
+
+BEGIN TEST: affinity
+
+main: creating local thread
+	thread_start: AffinityMask = 0x0
+main: creating global thread
+	thread_start: AffinityMask = 0x0
+main: creating global bound thread
+	thread_start: AffinityMask = 0x0
+
+END TEST: affinity
+
+
+BEGIN TEST: alarm
+
+
+END TEST: alarm
+
+
+BEGIN TEST: anonfm
+
+
+END TEST: anonfm
+
+
+BEGIN TEST: atomic
+
+PR_AtomicIncrement(-2) == -1: PASSED
+PR_AtomicIncrement(-1) == 0: PASSED
+PR_AtomicIncrement(0) == 1: PASSED
+PR_AtomicAdd(-2,1) == -1: PASSED
+PR_AtomicAdd(-1,4) == 3: PASSED
+PR_AtomicAdd(3,-6) == -3: PASSED
+PR_AtomicDecrement(2) == 1: PASSED
+PR_AtomicDecrement(1) == 0: PASSED
+PR_AtomicDecrement(0) == -1: PASSED
+PR_AtomicSet(-2, 2) == -2: PASSED
+PR_AtomicSet(-2, -2) == -2: PASSED
+PR_ATOMIC_INCREMENT(-2) == -1: PASSED
+PR_ATOMIC_INCREMENT(-1) == 0: PASSED
+PR_ATOMIC_INCREMENT(0) == 1: PASSED
+PR_ATOMIC_ADD(-2,1) == -1: PASSED
+PR_ATOMIC_ADD(-1,4) == 3: PASSED
+PR_ATOMIC_ADD(3,-6) == -3: PASSED
+PR_ATOMIC_DECREMENT(2) == 1: PASSED
+PR_ATOMIC_DECREMENT(1) == 0: PASSED
+PR_ATOMIC_DECREMENT(0) == -1: PASSED
+PR_ATOMIC_SET(-2, 2) == -2: PASSED
+PR_ATOMIC_SET(-2, -2) == -2: PASSED
+Atomic operations test PASSED
+
+END TEST: atomic
+
+
+BEGIN TEST: attach
+
+
+END TEST: attach
+
+
+BEGIN TEST: bigfile
+
+
+END TEST: bigfile
+
+
+BEGIN TEST: cleanup
+
+Cleanup settings
+	Thread type: LOCAL
+	Concurrency: 1
+	Number of threads: 1
+	Thread sleep: 10
+	Main sleep: 5
+	Cleanup will NOT be called
+
+main() exiting
+
+END TEST: cleanup
+
+
+BEGIN TEST: concur
+
+PASSED
+
+END TEST: concur
+
+
+BEGIN TEST: cvar2
+
+
+CondVar Test:                                                           
+                                                                        
+Simple test creates several local and global threads; half use a single,
+shared condvar, and the other half have their own condvar.  The main    
+thread then loops notifying them to wakeup.                             
+                                                                        
+The timeout test is very similar except that the threads are not        
+notified.  They will all wakeup on a 1 second timeout.                  
+                                                                        
+The mixed test combines the simple test and the timeout test; every     
+third thread is notified, the other threads are expected to timeout     
+correctly.                                                              
+                                                                        
+Lastly, the combined test creates a thread for each of the above three  
+cases and they all run simultaneously.                                  
+                                                                        
+This test is run with 5, 10, 15, and 20 threads of each type.
+
+
+5 Thread tests
+           Condvar simple test shared UU:  80.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU:  20.00 usec
+             Condvar simple test priv UK:   0.00 usec
+                 Condvar simple test All:  80.00 usec
+                    Condvar timeout test: 600.00 usec
+
+10 Thread tests
+           Condvar simple test shared UU:   0.00 usec
+           Condvar simple test shared UK:  20.00 usec
+             Condvar simple test priv UU:   0.00 usec
+             Condvar simple test priv UK:  80.00 usec
+                 Condvar simple test All:   0.00 usec
+                    Condvar timeout test: 570.00 usec
+
+15 Thread tests
+           Condvar simple test shared UU:   0.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU:   0.00 usec
+             Condvar simple test priv UK: 150.00 usec
+                 Condvar simple test All:   0.00 usec
+                    Condvar timeout test: 540.00 usec
+
+20 Thread tests
+           Condvar simple test shared UU:   0.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU:   0.00 usec
+             Condvar simple test priv UK: 150.00 usec
+                 Condvar simple test All: 160.00 usec
+                    Condvar timeout test: 690.00 usec
+PASS
+
+END TEST: cvar2
+
+
+BEGIN TEST: dlltest
+
+PASSED
+
+END TEST: dlltest
+
+
+BEGIN TEST: dtoa
+
+PASSED
+
+END TEST: dtoa
+
+
+BEGIN TEST: errcodes
+
+
+Number of error codes = 73
+
+PR_OUT_OF_MEMORY_ERROR                   = -6000
+PR_BAD_DESCRIPTOR_ERROR                  = -5999
+PR_WOULD_BLOCK_ERROR                     = -5998
+PR_ACCESS_FAULT_ERROR                    = -5997
+PR_INVALID_METHOD_ERROR                  = -5996
+PR_ILLEGAL_ACCESS_ERROR                  = -5995
+PR_UNKNOWN_ERROR                         = -5994
+PR_PENDING_INTERRUPT_ERROR               = -5993
+PR_NOT_IMPLEMENTED_ERROR                 = -5992
+PR_IO_ERROR                              = -5991
+PR_IO_TIMEOUT_ERROR                      = -5990
+PR_IO_PENDING_ERROR                      = -5989
+PR_DIRECTORY_OPEN_ERROR                  = -5988
+PR_INVALID_ARGUMENT_ERROR                = -5987
+PR_ADDRESS_NOT_AVAILABLE_ERROR           = -5986
+PR_ADDRESS_NOT_SUPPORTED_ERROR           = -5985
+PR_IS_CONNECTED_ERROR                    = -5984
+PR_BAD_ADDRESS_ERROR                     = -5983
+PR_ADDRESS_IN_USE_ERROR                  = -5982
+PR_CONNECT_REFUSED_ERROR                 = -5981
+PR_NETWORK_UNREACHABLE_ERROR             = -5980
+PR_CONNECT_TIMEOUT_ERROR                 = -5979
+PR_NOT_CONNECTED_ERROR                   = -5978
+PR_LOAD_LIBRARY_ERROR                    = -5977
+PR_UNLOAD_LIBRARY_ERROR                  = -5976
+PR_FIND_SYMBOL_ERROR                     = -5975
+PR_INSUFFICIENT_RESOURCES_ERROR          = -5974
+PR_DIRECTORY_LOOKUP_ERROR                = -5973
+PR_TPD_RANGE_ERROR                       = -5972
+PR_PROC_DESC_TABLE_FULL_ERROR            = -5971
+PR_SYS_DESC_TABLE_FULL_ERROR             = -5970
+PR_NOT_SOCKET_ERROR                      = -5969
+PR_NOT_TCP_SOCKET_ERROR                  = -5968
+PR_SOCKET_ADDRESS_IS_BOUND_ERROR         = -5967
+PR_NO_ACCESS_RIGHTS_ERROR                = -5966
+PR_OPERATION_NOT_SUPPORTED_ERROR         = -5965
+PR_PROTOCOL_NOT_SUPPORTED_ERROR          = -5964
+PR_REMOTE_FILE_ERROR                     = -5963
+PR_BUFFER_OVERFLOW_ERROR                 = -5962
+PR_CONNECT_RESET_ERROR                   = -5961
+PR_RANGE_ERROR                           = -5960
+PR_DEADLOCK_ERROR                        = -5959
+PR_FILE_IS_LOCKED_ERROR                  = -5958
+PR_FILE_TOO_BIG_ERROR                    = -5957
+PR_NO_DEVICE_SPACE_ERROR                 = -5956
+PR_PIPE_ERROR                            = -5955
+PR_NO_SEEK_DEVICE_ERROR                  = -5954
+PR_IS_DIRECTORY_ERROR                    = -5953
+PR_LOOP_ERROR                            = -5952
+PR_NAME_TOO_LONG_ERROR                   = -5951
+PR_FILE_NOT_FOUND_ERROR                  = -5950
+PR_NOT_DIRECTORY_ERROR                   = -5949
+PR_READ_ONLY_FILESYSTEM_ERROR            = -5948
+PR_DIRECTORY_NOT_EMPTY_ERROR             = -5947
+PR_FILESYSTEM_MOUNTED_ERROR              = -5946
+PR_NOT_SAME_DEVICE_ERROR                 = -5945
+PR_DIRECTORY_CORRUPTED_ERROR             = -5944
+PR_FILE_EXISTS_ERROR                     = -5943
+PR_MAX_DIRECTORY_ENTRIES_ERROR           = -5942
+PR_INVALID_DEVICE_STATE_ERROR            = -5941
+PR_DEVICE_IS_LOCKED_ERROR                = -5940
+PR_NO_MORE_FILES_ERROR                   = -5939
+PR_END_OF_FILE_ERROR                     = -5938
+PR_FILE_SEEK_ERROR                       = -5937
+PR_FILE_IS_BUSY_ERROR                    = -5936
+PR_IN_PROGRESS_ERROR                     = -5934
+PR_ALREADY_INITIATED_ERROR               = -5933
+PR_GROUP_EMPTY_ERROR                     = -5932
+PR_INVALID_STATE_ERROR                   = -5931
+PR_NETWORK_DOWN_ERROR                    = -5930
+PR_SOCKET_SHUTDOWN_ERROR                 = -5929
+PR_CONNECT_ABORTED_ERROR                 = -5928
+PR_HOST_UNREACHABLE_ERROR                = -5927
+
+END TEST: errcodes
+
+
+BEGIN TEST: exit
+
+
+END TEST: exit
+
+
+BEGIN TEST: fdcach
+
+PASS
+
+END TEST: fdcach
+
+
+BEGIN TEST: fileio
+
+PASS
+
+END TEST: fileio
+
+
+BEGIN TEST: foreign
+
+
+END TEST: foreign
+
+
+BEGIN TEST: formattm
+
+Tue Sep 02 15:40:26 GTB Daylight Time 2025
+
+Tue Sep 02 15:40:26 GTB Daylight Time 2025
+
+END TEST: formattm
+
+
+BEGIN TEST: fsync
+
+10 iterations over a 10 kbyte file: 0 [1000] 10000
+
+END TEST: fsync
+
+
+BEGIN TEST: i2l
+
+We have long long
+
+END TEST: i2l
+
+
+BEGIN TEST: initclk
+
+Elapsed time: 3000 ms, expected time: 3010 ms
+PASS
+
+END TEST: initclk
+
+
+BEGIN TEST: inrval
+
+inrval: Examine stdout to determine results.
+Overhead of 'PR_Now()' is 78 nsecs
+
+Overhead of 'PR_IntervalNow()' is 22 nsecs
+
+Overhead of 'PR_Now()' is 62 nsecs
+
+Overhead of 'PR_IntervalNow()' is 6 nsecs
+
+
+END TEST: inrval
+
+
+BEGIN TEST: instrumt
+
+Test not defined
+
+END TEST: instrumt
+
+
+BEGIN TEST: intrio
+
+A local thread will be interrupted by a local thread
+PR_Accept() is interrupted as expected
+A local thread will be interrupted by a global thread
+PR_Accept() is interrupted as expected
+A global thread will be interrupted by a local thread
+PR_Accept() is interrupted as expected
+A global thread will be interrupted by a global thread
+PR_Accept() is interrupted as expected
+PASSED
+
+END TEST: intrio
+
+
+BEGIN TEST: intrupt
+
+PASSED
+
+END TEST: intrupt
+
+
+BEGIN TEST: io_timeout
+
+test with global bound thread
+thread id 0, scope GLOBAL scope
+test with local thread
+thread id 0, scope GLOBAL scope
+test with global thread
+thread id 0, scope GLOBAL scope
+
+END TEST: io_timeout
+
+
+BEGIN TEST: ioconthr
+
+Interrupting the threads
+Threads terminated in 3005 milliseconds
+PASS
+
+END TEST: ioconthr
+
+
+BEGIN TEST: join
+
+User-User test
+User-Kernel test
+Kernel-User test
+Kernel-Kernel test
+Join with unjoinable thread
+PASSED
+
+END TEST: join
+
+
+BEGIN TEST: joinkk
+
+PASS
+
+END TEST: joinkk
+
+
+BEGIN TEST: joinku
+
+PASS
+
+END TEST: joinku
+
+
+BEGIN TEST: joinuk
+
+PASS
+
+END TEST: joinuk
+
+
+BEGIN TEST: joinuu
+
+PASS
+
+END TEST: joinuu
+
+
+BEGIN TEST: lazyinit
+
+
+END TEST: lazyinit
+
+
+BEGIN TEST: libfilename
+
+PASS
+
+END TEST: libfilename
+
+
+BEGIN TEST: lltest
+
+PASS
+
+END TEST: lltest
+
+
+BEGIN TEST: lock
+
+PASS
+
+END TEST: lock
+
+
+BEGIN TEST: lockfile
+
+
+END TEST: lockfile
+
+
+BEGIN TEST: logger
+
+
+END TEST: logger
+
+
+BEGIN TEST: many_cv
+
+Settings
+	Conditions / lock: 10
+	Loops to run test: 1
+PASS
+
+END TEST: many_cv
+
+
+BEGIN TEST: ntoh
+
+2 1
+1 2
+2 1
+4 3 2 1
+1 2 3 4
+4 3 2 1
+8 7 6 5 4 3 2 1
+1 2 3 4 5 6 7 8
+8 7 6 5 4 3 2 1
+PASS
+
+END TEST: ntoh
+
+
+BEGIN TEST: op_excl
+
+
+END TEST: op_excl
+
+
+BEGIN TEST: op_filnf
+
+error code is -5950 
+PASS
+
+END TEST: op_filnf
+
+
+BEGIN TEST: op_filok
+
+Test passed 
+
+END TEST: op_filok
+
+
+BEGIN TEST: op_nofil
+
+error code is PR_FILE_NOT_FOUND_ERROR, as expected
+PASS
+
+END TEST: op_nofil
+
+
+BEGIN TEST: parsetm
+
+rv = 0
+Wed Dec 31 22:00:00 UTC 3000
+rv = 0
+Wed Dec 31 22:00:00 UTC 3000
+
+END TEST: parsetm
+
+
+BEGIN TEST: peek
+
+PASS
+Running the test with local threads
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+Running the test with global threads
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+
+END TEST: peek
+
+
+BEGIN TEST: perf
+
+           local procedure call overhead:   0.00 usec
+             DLL procedure call overhead:   0.00 usec
+                   current calendar time:   0.00 usec
+                           interval time:   0.00 usec
+              idle lock lock/unlock pair:   0.00 usec
+            idle monitor entry/exit pair:   0.00 usec
+      idle cache monitor entry/exit pair:   0.00 usec
+              create/destroy thread pair:  50.00 usec
+              context switch - user/user:   8.00 usec
+            context switch - user/kernel:   2.00 usec
+            context switch - kernel/user:  10.00 usec
+          context switch - kernel/kernel:  10.00 usec
+         sema context switch - user/user:   0.00 usec
+       sema context switch - user/kernel:  10.00 usec
+       sema context switch - kernel/user:  10.00 usec
+     sema context switch - kernel/kernel:   8.00 usec
+--------------
+Adding 7 additional CPUs
+--------------
+           local procedure call overhead:   0.00 usec
+             DLL procedure call overhead:   0.00 usec
+                   current calendar time:   0.00 usec
+                           interval time:   0.00 usec
+              idle lock lock/unlock pair:   0.00 usec
+            idle monitor entry/exit pair:   0.00 usec
+      idle cache monitor entry/exit pair:   0.00 usec
+              create/destroy thread pair:  51.00 usec
+              context switch - user/user:   0.00 usec
+            context switch - user/kernel:   0.00 usec
+            context switch - kernel/user:  16.00 usec
+          context switch - kernel/kernel:   0.00 usec
+         sema context switch - user/user:  16.00 usec
+       sema context switch - user/kernel:   0.00 usec
+       sema context switch - kernel/user:  15.00 usec
+     sema context switch - kernel/kernel:   0.00 usec
+
+END TEST: perf
+
+
+BEGIN TEST: pipeping
+
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+PASS
+
+END TEST: pipeping
+
+
+BEGIN TEST: pipeping2
+
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+PASS
+
+END TEST: pipeping2
+
+
+BEGIN TEST: pipeself
+
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+PASS
+
+END TEST: pipeself
+
+
+BEGIN TEST: poll_nm
+
+
+END TEST: poll_nm
+
+
+BEGIN TEST: poll_to
+
+
+END TEST: poll_to
+
+
+BEGIN TEST: pollable
+
+PASSED
+
+END TEST: pollable
+
+
+BEGIN TEST: prftest
+
+PR_snprintf test 1 passed
+PR_snprintf test 2 passed
+
+END TEST: prftest
+
+
+BEGIN TEST: prfz
+
+Test: unsigned small '%zu' : OK
+Test: 0 '%zu' : OK
+Test: SIZE_MAX '%zx' : OK
+
+END TEST: prfz
+
+
+BEGIN TEST: primblok
+
+This test is not relevant on this platform
+
+END TEST: primblok
+
+
+BEGIN TEST: prpollml
+
+PASS
+
+END TEST: prpollml
+
+
+BEGIN TEST: pushtop
+
+PASS
+
+END TEST: pushtop
+
+
+BEGIN TEST: randseed
+
+
+END TEST: randseed
+
+
+BEGIN TEST: reinit
+
+
+BEGIN TEST: rwlocktest
+
+PASS
+
+END TEST: rwlocktest
+
+
+BEGIN TEST: sel_spd
+
+Running test for 5 iterations with 10 simultaneous threads.
+	Will send 8192 bytes of client data and 131072 bytes of server data
+TEST COMPLETE!
+Server results:
+
+----------
+server per thread totals 0	29000	0	1000	0
+server per thread elapsed time 30000
+----------
+Client results:
+
+----------
+client per thread totals 0	27000	200	2800	0
+client per thread elapsed time 30000
+                   select loop user/user: 8400.00 usec
+TEST COMPLETE!
+Server results:
+
+----------
+server per thread totals 10	51800	0	1000	0
+server per thread elapsed time 52800
+----------
+Client results:
+
+----------
+client per thread totals 10	49400	600	2800	0
+client per thread elapsed time 52800
+                 select loop user/kernel: 6000.00 usec
+TEST COMPLETE!
+Server results:
+
+----------
+server per thread totals 10	73800	400	1400	800
+server per thread elapsed time 76400
+----------
+Client results:
+
+----------
+client per thread totals 10	71200	800	3400	1000
+client per thread elapsed time 76400
+                 select loop kernel/user: 7600.00 usec
+TEST COMPLETE!
+Server results:
+
+----------
+server per thread totals 20	99800	400	1400	800
+server per thread elapsed time 102400
+----------
+Client results:
+
+----------
+client per thread totals 20	97200	800	3400	1000
+client per thread elapsed time 102400
+               select loop kernel/kernel: 5200.00 usec
+
+END TEST: sel_spd
+
+
+BEGIN TEST: selct_er
+
+
+END TEST: selct_er
+
+
+BEGIN TEST: selct_nm
+
+
+END TEST: selct_nm
+
+
+BEGIN TEST: selct_to
+
+
+END TEST: selct_to
+
+
+BEGIN TEST: selintr
+
+
+END TEST: selintr
+
+
+BEGIN TEST: sema
+
+PASS
+warning: removed semaphore /tmp/foo.sem64 left over from previous run
+warning: removed semaphore /tmp/bar.sem64 left over from previous run
+
+END TEST: sema
+
+
+BEGIN TEST: semaerr
+
+PASS
+PASS
+warning: deleted semaphore /tmp/foo.sem64 from previous run of the test
+
+END TEST: semaerr
+
+
+BEGIN TEST: semaping
+
+PASS
+PASS
+warning: removed shared memory /tmp/counter64 left over from previous run
+warning: removed semaphore /tmp/foo.sem64 left over from previous run
+warning: removed semaphore /tmp/bar.sem64 left over from previous run
+
+END TEST: semaping
+
+
+BEGIN TEST: sendzlf
+
+PASS
+
+END TEST: sendzlf
+
+
+BEGIN TEST: server_test
+
+
+END TEST: server_test
+
+
+BEGIN TEST: servr_kk
+
+
+END TEST: servr_kk
+
+
+BEGIN TEST: servr_uk
+
+
+END TEST: servr_uk
+
+
+BEGIN TEST: servr_ku
+
+
+END TEST: servr_ku
+
+
+BEGIN TEST: servr_uu
+
+
+END TEST: servr_uu
+
+
+BEGIN TEST: short_thread
+
+
+END TEST: short_thread
+
+
+BEGIN TEST: sigpipe
+
+
+END TEST: sigpipe
+
+
+BEGIN TEST: sockping
+
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+PASS
+
+END TEST: sockping
+
+
+BEGIN TEST: sprintf
+
+PASS
+
+END TEST: sprintf
+
+
+BEGIN TEST: stack
+
+d:\drived\devlibs\__nspr438\pr\tests\stack.exe successful
+		sum = 0x13948, expected = 0x13948
+
+END TEST: stack
+
+
+BEGIN TEST: stat
+
+           time to call PR_GetFileInfo():  29.04 usec avg, 2904 msec total
+                     time to call stat():  54.31 usec avg, 5431 msec total
+
+END TEST: stat
+
+
+BEGIN TEST: stdio
+
+This to standard out
+This to standard err
+
+END TEST: stdio
+
+
+BEGIN TEST: str2addr
+
+PASS
+
+END TEST: str2addr
+
+
+BEGIN TEST: strod
+
+Settings
+	Number to translate 1234567890123456789
+	Loops to run test: 1
+Translation =  1234567890123456800
+
+END TEST: strod
+
+
+BEGIN TEST: switch
+
+PASSED
+
+END TEST: switch
+
+
+BEGIN TEST: system
+
+PR_SI_HOSTNAME: ws3620nbar
+PR_SI_SYSNAME: Windows_NT
+PR_SI_RELEASE: 6.2
+PR_SI_ARCHITECTURE: x86-64
+Host page size is 4096
+Page shift is 12
+Memory map alignment is 65536
+Number of processors is: 8
+Physical memory size is: 34246168576
+
+END TEST: system
+
+
+BEGIN TEST: testbit
+
+PASSED
+
+END TEST: testbit
+
+
+BEGIN TEST: testfile
+
+TEST_DIR = C:\Users\nbarkas\AppData\Local\Temp\prdir
+File Test passed
+Dir Test passed
+
+END TEST: testfile
+
+
+BEGIN TEST: threads
+
+PASS
+
+END TEST: threads
+
+
+BEGIN TEST: timemac
+
+*********************************************
+**                                         **
+** Testing PR_Now(), PR_ExplodeTime, and   **
+** PR_ImplodeTime on the current time      **
+**                                         **
+*********************************************
+
+Current UTC is Tue Sep 2 13:10:22 UTC 2025
+Current local time is Tue Sep 2 16:10:22 0300 2025
+GMT offset is 7200, DST offset is 3600
+Please examine the results
+
+END TEST: timemac
+
+
+BEGIN TEST: timetest
+
+
+END TEST: timetest
+
+
+BEGIN TEST: tpd
+
+PASSED
+
+END TEST: tpd
+
+
+BEGIN TEST: udpsrv
+
+
+END TEST: udpsrv
+
+
+BEGIN TEST: version
+
+Runtime library version information
+  Build time: 02 Sep 2025 11:30:13 GMT
+  Build time: 2025-09-02 14:30:13
+  Portable runtime V4.38.0 ( beta )
+  filename: plc4.dll
+  security: N/A
+  copyright: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  comment: http://www.mozilla.org/MPL/
+
+END TEST: version
+
+
+BEGIN TEST: writev
+
+PASSED
+
+END TEST: writev
+
+
+BEGIN TEST: xnotify
+
+Done!
+
+END TEST: xnotify
+
+
+BEGIN TEST: zerolen
+
+PASS
+
+END TEST: zerolen
+
+
+BEGIN TEST: abstract
+
+PASS
+
+END TEST: abstract
+
+
+BEGIN TEST: accept
+
+PASS
+
+END TEST: accept
+
+
+BEGIN TEST: acceptread
+
+Testing w/ write_dally = 0 msec
+Accepted connection from (0x122fde8)127.0.0.1:15598
+(Server) read [0x122fd70..0x122fde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 500 msec
+Accepted connection from (0x142fde8)127.0.0.1:15854
+(Server) read [0x142fd70..0x142fde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1000 msec
+Accepted connection from (0x122fde8)127.0.0.1:16110
+(Server) read [0x122fd70..0x122fde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1500 msec
+Accepted connection from (0x122fde8)127.0.0.1:16366
+(Server) read [0x122fd70..0x122fde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 2000 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+Testing w/ write_dally = 2500 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+
+END TEST: acceptread
+
+
+BEGIN TEST: acceptreademu
+
+Testing w/ write_dally = 0 msec
+Accepted connection from (0x11cfde8)127.0.0.1:17134
+(Server) read [0x11cfd70..0x11cfde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 500 msec
+Accepted connection from (0x17cfde8)127.0.0.1:17390
+(Server) read [0x17cfd70..0x17cfde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1000 msec
+Accepted connection from (0x13cfde8)127.0.0.1:17646
+(Server) read [0x13cfd70..0x13cfde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 1500 msec
+Accepted connection from (0x12cfde8)127.0.0.1:17902
+(Server) read [0x12cfd70..0x12cfde5) GET / HTTP/1.0
+
+
+PR_Recv (client) succeeded: 17 bytes
+GET / HTTP/1.0
+
+
+Testing w/ write_dally = 2000 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_RESET_ERROR(-5961), oserror = 10054
+Testing w/ write_dally = 2500 msec
+PR_AcceptRead (server) failed: PR_IO_TIMEOUT_ERROR(-5990), oserror = 0
+PR_Recv (client) failed: PR_CONNECT_ABORTED_ERROR(-5928), oserror = 10053
+
+END TEST: acceptreademu
+
+
+BEGIN TEST: affinity
+
+main: creating local thread
+	thread_start: AffinityMask = 0x0
+main: creating global thread
+	thread_start: AffinityMask = 0x0
+main: creating global bound thread
+	thread_start: AffinityMask = 0x0
+
+END TEST: affinity
+
+
+BEGIN TEST: alarm
+
+
+END TEST: alarm
+
+
+BEGIN TEST: anonfm
+
+
+END TEST: anonfm
+
+
+BEGIN TEST: atomic
+
+PR_AtomicIncrement(-2) == -1: PASSED
+PR_AtomicIncrement(-1) == 0: PASSED
+PR_AtomicIncrement(0) == 1: PASSED
+PR_AtomicAdd(-2,1) == -1: PASSED
+PR_AtomicAdd(-1,4) == 3: PASSED
+PR_AtomicAdd(3,-6) == -3: PASSED
+PR_AtomicDecrement(2) == 1: PASSED
+PR_AtomicDecrement(1) == 0: PASSED
+PR_AtomicDecrement(0) == -1: PASSED
+PR_AtomicSet(-2, 2) == -2: PASSED
+PR_AtomicSet(-2, -2) == -2: PASSED
+PR_ATOMIC_INCREMENT(-2) == -1: PASSED
+PR_ATOMIC_INCREMENT(-1) == 0: PASSED
+PR_ATOMIC_INCREMENT(0) == 1: PASSED
+PR_ATOMIC_ADD(-2,1) == -1: PASSED
+PR_ATOMIC_ADD(-1,4) == 3: PASSED
+PR_ATOMIC_ADD(3,-6) == -3: PASSED
+PR_ATOMIC_DECREMENT(2) == 1: PASSED
+PR_ATOMIC_DECREMENT(1) == 0: PASSED
+PR_ATOMIC_DECREMENT(0) == -1: PASSED
+PR_ATOMIC_SET(-2, 2) == -2: PASSED
+PR_ATOMIC_SET(-2, -2) == -2: PASSED
+Atomic operations test PASSED
+
+END TEST: atomic
+
+
+BEGIN TEST: attach
+
+
+END TEST: attach
+
+
+BEGIN TEST: bigfile
+
+
+END TEST: bigfile
+
+
+BEGIN TEST: cleanup
+
+Cleanup settings
+	Thread type: LOCAL
+	Concurrency: 1
+	Number of threads: 1
+	Thread sleep: 10
+	Main sleep: 5
+	Cleanup will NOT be called
+
+main() exiting
+
+END TEST: cleanup
+
+
+BEGIN TEST: concur
+
+PASSED
+
+END TEST: concur
+
+
+BEGIN TEST: cvar2
+
+
+CondVar Test:                                                           
+                                                                        
+Simple test creates several local and global threads; half use a single,
+shared condvar, and the other half have their own condvar.  The main    
+thread then loops notifying them to wakeup.                             
+                                                                        
+The timeout test is very similar except that the threads are not        
+notified.  They will all wakeup on a 1 second timeout.                  
+                                                                        
+The mixed test combines the simple test and the timeout test; every     
+third thread is notified, the other threads are expected to timeout     
+correctly.                                                              
+                                                                        
+Lastly, the combined test creates a thread for each of the above three  
+cases and they all run simultaneously.                                  
+                                                                        
+This test is run with 5, 10, 15, and 20 threads of each type.
+
+
+5 Thread tests
+           Condvar simple test shared UU:   0.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU:   0.00 usec
+             Condvar simple test priv UK:  90.00 usec
+                 Condvar simple test All:   0.00 usec
+                    Condvar timeout test: 670.00 usec
+
+10 Thread tests
+           Condvar simple test shared UU:  40.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU:  80.00 usec
+             Condvar simple test priv UK:   0.00 usec
+                 Condvar simple test All: 110.00 usec
+                    Condvar timeout test: 550.00 usec
+
+15 Thread tests
+           Condvar simple test shared UU:   0.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU:   0.00 usec
+             Condvar simple test priv UK:   0.00 usec
+                 Condvar simple test All: 230.00 usec
+                    Condvar timeout test: 720.00 usec
+
+20 Thread tests
+           Condvar simple test shared UU: 130.00 usec
+           Condvar simple test shared UK:   0.00 usec
+             Condvar simple test priv UU: 160.00 usec
+             Condvar simple test priv UK:   0.00 usec
+                 Condvar simple test All: 160.00 usec
+                    Condvar timeout test: 760.00 usec
+PASS
+
+END TEST: cvar2
+
+
+BEGIN TEST: dlltest
+
+PASSED
+
+END TEST: dlltest
+
+
+BEGIN TEST: dtoa
+
+PASSED
+
+END TEST: dtoa
+
+
+BEGIN TEST: errcodes
+
+
+Number of error codes = 73
+
+PR_OUT_OF_MEMORY_ERROR                   = -6000
+PR_BAD_DESCRIPTOR_ERROR                  = -5999
+PR_WOULD_BLOCK_ERROR                     = -5998
+PR_ACCESS_FAULT_ERROR                    = -5997
+PR_INVALID_METHOD_ERROR                  = -5996
+PR_ILLEGAL_ACCESS_ERROR                  = -5995
+PR_UNKNOWN_ERROR                         = -5994
+PR_PENDING_INTERRUPT_ERROR               = -5993
+PR_NOT_IMPLEMENTED_ERROR                 = -5992
+PR_IO_ERROR                              = -5991
+PR_IO_TIMEOUT_ERROR                      = -5990
+PR_IO_PENDING_ERROR                      = -5989
+PR_DIRECTORY_OPEN_ERROR                  = -5988
+PR_INVALID_ARGUMENT_ERROR                = -5987
+PR_ADDRESS_NOT_AVAILABLE_ERROR           = -5986
+PR_ADDRESS_NOT_SUPPORTED_ERROR           = -5985
+PR_IS_CONNECTED_ERROR                    = -5984
+PR_BAD_ADDRESS_ERROR                     = -5983
+PR_ADDRESS_IN_USE_ERROR                  = -5982
+PR_CONNECT_REFUSED_ERROR                 = -5981
+PR_NETWORK_UNREACHABLE_ERROR             = -5980
+PR_CONNECT_TIMEOUT_ERROR                 = -5979
+PR_NOT_CONNECTED_ERROR                   = -5978
+PR_LOAD_LIBRARY_ERROR                    = -5977
+PR_UNLOAD_LIBRARY_ERROR                  = -5976
+PR_FIND_SYMBOL_ERROR                     = -5975
+PR_INSUFFICIENT_RESOURCES_ERROR          = -5974
+PR_DIRECTORY_LOOKUP_ERROR                = -5973
+PR_TPD_RANGE_ERROR                       = -5972
+PR_PROC_DESC_TABLE_FULL_ERROR            = -5971
+PR_SYS_DESC_TABLE_FULL_ERROR             = -5970
+PR_NOT_SOCKET_ERROR                      = -5969
+PR_NOT_TCP_SOCKET_ERROR                  = -5968
+PR_SOCKET_ADDRESS_IS_BOUND_ERROR         = -5967
+PR_NO_ACCESS_RIGHTS_ERROR                = -5966
+PR_OPERATION_NOT_SUPPORTED_ERROR         = -5965
+PR_PROTOCOL_NOT_SUPPORTED_ERROR          = -5964
+PR_REMOTE_FILE_ERROR                     = -5963
+PR_BUFFER_OVERFLOW_ERROR                 = -5962
+PR_CONNECT_RESET_ERROR                   = -5961
+PR_RANGE_ERROR                           = -5960
+PR_DEADLOCK_ERROR                        = -5959
+PR_FILE_IS_LOCKED_ERROR                  = -5958
+PR_FILE_TOO_BIG_ERROR                    = -5957
+PR_NO_DEVICE_SPACE_ERROR                 = -5956
+PR_PIPE_ERROR                            = -5955
+PR_NO_SEEK_DEVICE_ERROR                  = -5954
+PR_IS_DIRECTORY_ERROR                    = -5953
+PR_LOOP_ERROR                            = -5952
+PR_NAME_TOO_LONG_ERROR                   = -5951
+PR_FILE_NOT_FOUND_ERROR                  = -5950
+PR_NOT_DIRECTORY_ERROR                   = -5949
+PR_READ_ONLY_FILESYSTEM_ERROR            = -5948
+PR_DIRECTORY_NOT_EMPTY_ERROR             = -5947
+PR_FILESYSTEM_MOUNTED_ERROR              = -5946
+PR_NOT_SAME_DEVICE_ERROR                 = -5945
+PR_DIRECTORY_CORRUPTED_ERROR             = -5944
+PR_FILE_EXISTS_ERROR                     = -5943
+PR_MAX_DIRECTORY_ENTRIES_ERROR           = -5942
+PR_INVALID_DEVICE_STATE_ERROR            = -5941
+PR_DEVICE_IS_LOCKED_ERROR                = -5940
+PR_NO_MORE_FILES_ERROR                   = -5939
+PR_END_OF_FILE_ERROR                     = -5938
+PR_FILE_SEEK_ERROR                       = -5937
+PR_FILE_IS_BUSY_ERROR                    = -5936
+PR_IN_PROGRESS_ERROR                     = -5934
+PR_ALREADY_INITIATED_ERROR               = -5933
+PR_GROUP_EMPTY_ERROR                     = -5932
+PR_INVALID_STATE_ERROR                   = -5931
+PR_NETWORK_DOWN_ERROR                    = -5930
+PR_SOCKET_SHUTDOWN_ERROR                 = -5929
+PR_CONNECT_ABORTED_ERROR                 = -5928
+PR_HOST_UNREACHABLE_ERROR                = -5927
+
+END TEST: errcodes
+
+
+BEGIN TEST: exit
+
+
+END TEST: exit
+
+
+BEGIN TEST: fdcach
+
+PASS
+
+END TEST: fdcach
+
+
+BEGIN TEST: fileio
+
+PASS
+
+END TEST: fileio
+
+
+BEGIN TEST: foreign
+
+
+END TEST: foreign
+
+
+BEGIN TEST: formattm
+
+Tue Sep 02 17:06:36 GTB Daylight Time 2025
+
+Tue Sep 02 17:06:36 GTB Daylight Time 2025
+
+END TEST: formattm
+
+
+BEGIN TEST: fsync
+
+10 iterations over a 10 kbyte file: 0 [0] 0
+
+END TEST: fsync
+
+
+BEGIN TEST: i2l
+
+We have long long
+
+END TEST: i2l
+
+
+BEGIN TEST: initclk
+
+Elapsed time: 3000 ms, expected time: 3015 ms
+PASS
+
+END TEST: initclk
+
+
+BEGIN TEST: inrval
+
+inrval: Examine stdout to determine results.
+Overhead of 'PR_Now()' is 35 nsecs
+
+Overhead of 'PR_IntervalNow()' is 0 nsecs
+
+Overhead of 'PR_Now()' is 114 nsecs
+
+Overhead of 'PR_IntervalNow()' is 21 nsecs
+
+
+END TEST: inrval
+
+
+BEGIN TEST: instrumt
+
+Test not defined
+
+END TEST: instrumt
+
+
+BEGIN TEST: intrio
+
+A local thread will be interrupted by a local thread
+PR_Accept() is interrupted as expected
+A local thread will be interrupted by a global thread
+PR_Accept() is interrupted as expected
+A global thread will be interrupted by a local thread
+PR_Accept() is interrupted as expected
+A global thread will be interrupted by a global thread
+PR_Accept() is interrupted as expected
+PASSED
+
+END TEST: intrio
+
+
+BEGIN TEST: intrupt
+
+PASSED
+
+END TEST: intrupt
+
+
+BEGIN TEST: io_timeout
+
+test with global bound thread
+thread id 0, scope GLOBAL scope
+test with local thread
+thread id 0, scope GLOBAL scope
+test with global thread
+thread id 0, scope GLOBAL scope
+
+END TEST: io_timeout
+
+
+BEGIN TEST: ioconthr
+
+Interrupting the threads
+Threads terminated in 2987 milliseconds
+PASS
+
+END TEST: ioconthr
+
+
+BEGIN TEST: join
+
+User-User test
+User-Kernel test
+Kernel-User test
+Kernel-Kernel test
+Join with unjoinable thread
+PASSED
+
+END TEST: join
+
+
+BEGIN TEST: joinkk
+
+PASS
+
+END TEST: joinkk
+
+
+BEGIN TEST: joinku
+
+PASS
+
+END TEST: joinku
+
+
+BEGIN TEST: joinuk
+
+PASS
+
+END TEST: joinuk
+
+
+BEGIN TEST: joinuu
+
+PASS
+
+END TEST: joinuu
+
+
+BEGIN TEST: lazyinit
+
+
+END TEST: lazyinit
+
+
+BEGIN TEST: libfilename
+
+PASS
+
+END TEST: libfilename
+
+
+BEGIN TEST: lltest
+
+PASS
+
+END TEST: lltest
+
+
+BEGIN TEST: lock
+
+PASS
+
+END TEST: lock
+
+
+BEGIN TEST: lockfile
+
+
+END TEST: lockfile
+
+
+BEGIN TEST: logger
+
+
+END TEST: logger
+
+
+BEGIN TEST: many_cv
+
+Settings
+	Conditions / lock: 10
+	Loops to run test: 1
+PASS
+
+END TEST: many_cv
+
+
+BEGIN TEST: ntoh
+
+2 1
+1 2
+2 1
+4 3 2 1
+1 2 3 4
+4 3 2 1
+8 7 6 5 4 3 2 1
+1 2 3 4 5 6 7 8
+8 7 6 5 4 3 2 1
+PASS
+
+END TEST: ntoh
+
+
+BEGIN TEST: op_excl
+
+
+END TEST: op_excl
+
+
+BEGIN TEST: op_filnf
+
+error code is -5950 
+PASS
+
+END TEST: op_filnf
+
+
+BEGIN TEST: op_filok
+
+Test passed 
+
+END TEST: op_filok
+
+
+BEGIN TEST: op_nofil
+
+error code is PR_FILE_NOT_FOUND_ERROR, as expected
+PASS
+
+END TEST: op_nofil
+
+
+BEGIN TEST: parsetm
+
+rv = 0
+Wed Dec 31 22:00:00 UTC 3000
+rv = 0
+Wed Dec 31 22:00:00 UTC 3000
+
+END TEST: parsetm
+
+
+BEGIN TEST: peek
+
+PASS
+Running the test with local threads
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+Running the test with global threads
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+server: peeked expected data
+server: peeked expected data
+server: received expected data
+client: peeked expected data
+client: peeked expected data
+client: received expected data
+
+END TEST: peek
+
+
+BEGIN TEST: perf
+
+           local procedure call overhead:   0.00 usec
+             DLL procedure call overhead:   0.00 usec
+                   current calendar time:   0.00 usec
+                           interval time:   0.00 usec
+              idle lock lock/unlock pair:   0.00 usec
+            idle monitor entry/exit pair:   0.00 usec
+      idle cache monitor entry/exit pair:   0.00 usec
+              create/destroy thread pair:  15.00 usec
+              context switch - user/user:  16.00 usec
+            context switch - user/kernel:   0.00 usec
+            context switch - kernel/user:   0.00 usec
+          context switch - kernel/kernel:   0.00 usec
+         sema context switch - user/user:  19.00 usec
+       sema context switch - user/kernel:   5.00 usec
+       sema context switch - kernel/user:   0.00 usec
+     sema context switch - kernel/kernel:   9.00 usec
+--------------
+Adding 7 additional CPUs
+--------------
+           local procedure call overhead:   0.00 usec
+             DLL procedure call overhead:   0.00 usec
+                   current calendar time:   0.00 usec
+                           interval time:   0.00 usec
+              idle lock lock/unlock pair:   0.00 usec
+            idle monitor entry/exit pair:   0.00 usec
+      idle cache monitor entry/exit pair:   0.00 usec
+              create/destroy thread pair:  15.00 usec
+              context switch - user/user:   0.00 usec
+            context switch - user/kernel:  15.00 usec
+            context switch - kernel/user:   0.00 usec
+          context switch - kernel/kernel:   0.00 usec
+         sema context switch - user/user:   0.00 usec
+       sema context switch - user/kernel:  16.00 usec
+       sema context switch - kernel/user:   0.00 usec
+     sema context switch - kernel/kernel:   0.00 usec
+
+END TEST: perf
+
+
+BEGIN TEST: pipeping
+
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+PASS
+
+END TEST: pipeping
+
+
+BEGIN TEST: pipeping2
+
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+pong process: received "ping"
+pong process: sending "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+ping process: sending "ping"
+ping process: received "pong"
+PASS
+
+END TEST: pipeping2
+
+
+BEGIN TEST: pipeself
+
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+ping thread: sending "ping"
+pong thread: received "ping"
+pong thread: sending "pong"
+ping thread: received "pong"
+PASS
+
+END TEST: pipeself
+
+
+BEGIN TEST: poll_nm
+
+
+END TEST: poll_nm
+
+
+BEGIN TEST: poll_to
+
+
+END TEST: poll_to
+
+
+BEGIN TEST: pollable
+
+PASSED
+
+END TEST: pollable
+
+
+BEGIN TEST: prftest
+
+PR_snprintf test 1 passed
+PR_snprintf test 2 passed
+
+END TEST: prftest
+
+
+BEGIN TEST: prfz
+
+Test: unsigned small '%zu' : OK
+Test: 0 '%zu' : OK
+Test: SIZE_MAX '%zx' : OK
+
+END TEST: prfz
+
+
+BEGIN TEST: primblok
+
+This test is not relevant on this platform
+
+END TEST: primblok
+
+
+BEGIN TEST: prpollml
+
+PASS
+
+END TEST: prpollml
+
+
+BEGIN TEST: pushtop
+
+PASS
+
+END TEST: pushtop
+
+
+BEGIN TEST: randseed
+
+
+END TEST: randseed
+
+
+BEGIN TEST: reinit
+

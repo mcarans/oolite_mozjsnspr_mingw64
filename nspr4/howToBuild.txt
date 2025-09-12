@@ -1,0 +1,8 @@
+How to build the NSPR 4.38 beta library for Windows:
+
+1. Change to the root folder of the library (default is C:\DevelopmentEnvironment\gcc\Msys_x2\1.0\DevlibsBuildFiles64\nspr4)
+2. Make nsisntall.exe findable:
+	export PATH=$PATH:/c/DevelopmentEnvironment/gcc/Msys_x2/1.0/DevlibsBuildFiles64/nspr4
+3. Execut make like this:
+	make AR=ar -j[x], where x is the number of threads to allocate for the build
+4. Output will be in C:\DevelopmentEnvironment\gcc\Msys_x2\1.0\DevlibsBuildFiles64\nspr4\dist

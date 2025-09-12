@@ -1,0 +1,31 @@
+How to build Spidermonkey for Windows with JS_THREADSAFE enabled:
+
+1. Change to the js/src folder.
+2. Execute the following command:
+	make BUILD_OPT=1 JS_DIST=/c/DevelopmentEnvironment/gcc/Msys_x2/1.0/DevlibsBuildFiles64/nspr4/dist JS_THREADSAFE=1 -fMakefile.ref -j[x]
+	where x is the number of threads to assign to the build
+3. The build will stop near the end before completing. To finish it off execute:
+	as -o WINNT5.1_OPT.OBJ/methodjit/TrampolinemingwX64.o -mtune=generic64 methodjit/TrampolinemingwX64.s
+	to build the missing trampoline object file and
+	./linkit64.bat
+	to generate the js dll. The import libraries (static + dynamic) have also been generated. All final products are inside WINNT5.1_OPT.OBJ
+	
+	
+
+For debug builds the process is very similar. The steps are:
+1. Change to the js/src folder.
+2. Execute the following command:
+	make JS_DIST=/c/DevelopmentEnvironment/gcc/Msys_x2/1.0/DevlibsBuildFiles64/nspr4/dist JS_THREADSAFE=1 -fMakefile.ref -j[x]
+	where x is the number of threads to assign to the build
+3. The build will stop near the end before completing. To finish it off execute:
+	as -o WINNT5.1_DBG.OBJ/methodjit/TrampolinemingwX64.o -mtune=generic64 methodjit/TrampolinemingwX64.s
+	to build the missing trampoline object file and
+	./linkit64dbg.bat
+	to generate the js dll. The import libraries (static + dynamic) have also been generated. All final products are inside WINNT5.1_DBG.OBJ
+	
+
+
+The samw steps can be used to build Spidermonkey without JS_THREADSAFE. Just remember to set the macro appropriately inside js-config.h. Use
+#define JS_THREADSAFE 1 to build with thread safety or
+#undef JS_THREADSAFE to build a non-thread safe library
+
