@@ -4,7 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-prefix=/usr/local
+prefix=/mingw64
 
 major_version=4
 minor_version=38

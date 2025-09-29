@@ -9,7 +9,7 @@ USE_AUTOCONF	= 1
 
 MOZILLA_CLIENT	= 
 
-prefix		= /usr/local
+prefix		= /mingw64
 exec_prefix	= ${prefix}
 bindir		= ${exec_prefix}/bin
 includedir	= ${prefix}/include/nspr
