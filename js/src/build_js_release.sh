@@ -1,4 +1,5 @@
 rm -rf WINNT5.1_OPT.OBJ
+mkdir -p WINNT5.1_OPT.OBJ/nanojit
 # This first make fails but generates a file that will make allow run of same command to work
 make BUILD_OPT=1 JS_DIST=/mingw64 JS_THREADSAFE=1 -fMakefile.ref
 echo "Continuing build after first make failure..."
