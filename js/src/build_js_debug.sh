@@ -1,9 +1,9 @@
 rm -rf WINNT5.1_OPT.OBJ
 # This first make fails but generates a file that will allow next run of same command to work
-make JS_DIST=../../nspr4/dist JS_THREADSAFE=1 -fMakefile.ref -j16
+make JS_DIST=../../nspr4/dist JS_THREADSAFE=1 -fMakefile.ref
 echo "Continuing build after first make failure..."
 # This second make runs until linking then fails
-make JS_DIST=../../nspr4/dist JS_THREADSAFE=1 -fMakefile.ref -j16
+make JS_DIST=../../nspr4/dist JS_THREADSAFE=1 -fMakefile.ref
 echo "Continuing build after link failure..."
 set -x
 as -o WINNT5.1_DBG.OBJ/methodjit/TrampolinemingwX64.o -mtune=generic64 methodjit/TrampolinemingwX64.s
