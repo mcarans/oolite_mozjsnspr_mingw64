@@ -115,7 +115,7 @@
 #define JS_ALIGN_OF_POINTER 8L
 #define JS_ALIGN_OF_WORD    4L
 
-#define JS_BYTES_PER_WORD_LOG2   2L
+#define JS_BYTES_PER_WORD_LOG2   3L
 //#define JS_BYTES_PER_DWORD_LOG2  3L	// not used
 #define PR_WORDS_PER_DWORD_LOG2  1L
 
