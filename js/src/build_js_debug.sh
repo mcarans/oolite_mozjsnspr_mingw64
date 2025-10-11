@@ -1,8 +1,12 @@
 rm -rf WINNT5.1_OPT.OBJ
-# This first make fails but generates a file that will allow next run of same command to work
+mkdir -p WINNT5.1_OPT.OBJ/nanojit
+# This first make fails but generates a folder that will allow run of same command to continue
 make JS_DIST=/mingw64 JS_THREADSAFE=1 -fMakefile.ref
 echo "Continuing build after first make failure..."
-# This second make runs until linking then fails
+# This second may fails, generating a folder that will allow run of same command to continue or will run as far as is possible
+make JS_DIST=/mingw64 JS_THREADSAFE=1 -fMakefile.ref
+echo "Continuing build after second make failure..."
+# This third make runs until linking then fails
 make JS_DIST=/mingw64 JS_THREADSAFE=1 -fMakefile.ref
 echo "Continuing build after link failure..."
 set -x
