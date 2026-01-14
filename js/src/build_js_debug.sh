@@ -1,5 +1,5 @@
-rm -rf WINNT5.1_OPT.OBJ
-mkdir -p WINNT5.1_OPT.OBJ/nanojit
+rm -rf WINNT5.1_DBG.OBJ
+mkdir -p WINNT5.1_DBG.OBJ/nanojit
 # This first make fails but generates a folder that will allow run of same command to continue
 make JS_DIST=$MINGW_PREFIX JS_THREADSAFE=1 -fMakefile.ref -j$(nproc)
 echo "Continuing build after first make failure..."
